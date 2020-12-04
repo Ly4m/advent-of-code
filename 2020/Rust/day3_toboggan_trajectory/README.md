@@ -4,8 +4,8 @@ This one looked intimidating but was actually quite easy !
 
 ## Thoughts on learning/using Rust
 
-* Iterator functions are really helpfull 
-* Small introduction to borrowing/ownershipt by passing lines to the count_trees function
+* Iterator functions are really helpful 
+* Small introduction to borrowing/ownership by passing lines to the count_trees function
 
 # Pseudo code
 
