@@ -26,8 +26,7 @@ fn count_trees(lines: &Vec<String>, width: usize, down_step:usize, right_step: u
         .step_by(down_step)
         .filter(|l| {
             position += right_step; // move on x Axis
-
-            if position >= width { position -= width; } // prevent out of bound
+            position %= width; // prevent out of bound
 
             l.chars().nth(position).unwrap() == '#' // if tree
         }).count();
