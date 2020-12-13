@@ -2,36 +2,31 @@ use std::collections::HashSet;
 use std::fs;
 use std::iter::FromIterator;
 
-fn main() {
-    let lines = fs::read_to_string("src/declaration_form.in").unwrap().lines()
+fn parse_input() -> Vec<String> {
+    fs::read_to_string("inputs/day_6.in").unwrap().lines()
         .map(String::from)
-        .collect::<Vec<String>>();
-
-    let part_1 = solve_part_1(&lines);
-    println!("{}", part_1);
-
-    let part_2 = solve_part_2(&lines);
-    println!("{}", part_2);
+        .collect()
 }
 
-fn solve_part_1(lines: &Vec<String>) -> usize {
-    lines
+
+pub fn solve_part_1() -> usize {
+    parse_input()
         .split(|l| l.len() == 0)
         .map(|l| count_distinct_answers(l))
         .sum()
 }
 
-fn count_distinct_answers(group: &[String]) -> usize {
-    let all_group_answers: Vec<char> = group.iter().flat_map(|c| c.chars()).collect();
-    let counts:HashSet<char> = HashSet::from_iter(all_group_answers.iter().map(|x| *x));
-    counts.len()
-}
-
-fn solve_part_2(lines: &Vec<String>) -> usize {
-    lines
+pub fn solve_part_2() -> usize {
+    parse_input()
         .split(|l| l.len() == 0)
         .map(|l| count_common_answers(l))
         .sum()
+}
+
+fn count_distinct_answers(group: &[String]) -> usize {
+    let all_group_answers: Vec<char> = group.iter().flat_map(|c| c.chars()).collect();
+    let counts: HashSet<char> = HashSet::from_iter(all_group_answers.iter().map(|x| *x));
+    counts.len()
 }
 
 fn count_common_answers(group: &[String]) -> usize {
@@ -48,7 +43,7 @@ fn count_common_answers(group: &[String]) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::count_common_answers;
+    use crate::day_6::count_common_answers;
 
     #[test]
     fn simple_test() {

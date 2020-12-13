@@ -5,6 +5,13 @@ use std::time::Instant;
 
 mod state;
 mod day_1;
+mod day_2;
+mod day_3;
+mod day_4;
+mod day_5;
+mod day_6;
+mod day_7;
+mod day_8;
 mod day_9;
 mod day_10;
 
@@ -34,6 +41,20 @@ fn main() {
         match (day, part) {
             (1, 1) => run_bench(day_1::solve_part_1),
             (1, 2) => run_bench(day_1::solve_part_2),
+            (2, 1) => run_bench(day_2::solve_part_1),
+            (2, 2) => run_bench(day_2::solve_part_2),
+            (3, 1) => run_bench(day_3::solve_part_1),
+            (3, 2) => run_bench(day_3::solve_part_2),
+            (4, 1) => run_bench(day_4::solve_part_1),
+            (4, 2) => run_bench(day_4::solve_part_2),
+            (5, 1) => run_bench(day_5::solve_part_1),
+            (5, 2) => run_bench(day_5::solve_part_2),
+            (6, 1) => run_bench(day_6::solve_part_1),
+            (6, 2) => run_bench(day_6::solve_part_2),
+            (7, 1) => run_bench(day_7::solve_part_1),
+            (7, 2) => run_bench(day_7::solve_part_2),
+            (8, 1) => run_bench(day_8::solve_part_1),
+            (8, 2) => run_bench(day_8::solve_part_2),
             (9, 1) => run_bench(day_9::solve_part_1),
             (9, 2) => run_bench(day_9::solve_part_2),
             (10, 1) => run_bench(day_10::solve_part_1),

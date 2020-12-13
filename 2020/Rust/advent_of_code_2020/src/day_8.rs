@@ -1,17 +1,11 @@
 use std::collections::HashSet;
 use std::fs;
 
-fn main() {
-    let lines = fs::read_to_string("src/program.in").unwrap().lines()
+fn parse_input() -> Vec<Instruction> {
+    let lines = fs::read_to_string("inputs/day_8.in").unwrap().lines()
         .map(String::from)
-        .collect::<Vec<String>>();
-
-    let instructions = parse_into_instructions(&lines);
-    let part1 = solve_part_1(&instructions);
-    println!("Part 1: {}", part1);
-
-    let part2 = solve_part_2(&instructions);
-    println!("Part 2: {}", part2);
+        .collect();
+    parse_into_instructions(&lines)
 }
 
 #[derive(Clone)]
@@ -34,7 +28,8 @@ fn parse_into_instructions(lines: &Vec<String>) -> Vec<Instruction> {
         .collect()
 }
 
-fn solve_part_2(instructions: &Vec<Instruction>) -> isize {
+pub fn solve_part_2() -> usize {
+    let instructions = &parse_input();
     let instruction_count = instructions
         .iter()
         .map(|instruction| if instruction.operation.as_str() != "acc" { true } else { false })
@@ -53,14 +48,14 @@ fn solve_part_2(instructions: &Vec<Instruction>) -> isize {
 
             let result = run_program(&clone);
 
-            if result != -1 { return result; }
+            if result != 0 { return result; }
         }
     }
 
-    -1 // No result found !
+    0 // No result found !
 }
 
-fn run_program(instructions: &Vec<Instruction>) -> isize {
+fn run_program(instructions: &Vec<Instruction>) -> usize {
     let mut accumulator: isize = 0;
     let mut index: isize = 0;
 
@@ -80,7 +75,7 @@ fn run_program(instructions: &Vec<Instruction>) -> isize {
         }
 
         if index == instructions.len() as isize {
-            return accumulator;
+            return accumulator as usize;
         }
 
         if !all_index.remove(&index) {
@@ -88,10 +83,11 @@ fn run_program(instructions: &Vec<Instruction>) -> isize {
         }
     }
 
-    -1
+    0
 }
 
-fn solve_part_1(instructions: &Vec<Instruction>) -> isize {
+pub fn solve_part_1() -> usize {
+    let instructions = &parse_input();
     let mut accumulator: isize = 0;
     let mut index: isize = 0;
 
@@ -115,5 +111,5 @@ fn solve_part_1(instructions: &Vec<Instruction>) -> isize {
         }
     }
 
-    accumulator
+    accumulator as usize
 }

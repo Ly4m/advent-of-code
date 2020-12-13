@@ -4,10 +4,47 @@ use colour::dark_green_ln;
 use colour::red_ln;
 use regex::Regex;
 
-fn main() {
-    let lines = fs::read_to_string("src/passports.in").unwrap().lines()
+fn parse_input() -> Vec<String> {
+    fs::read_to_string("inputs/day_4.in").unwrap().lines()
         .map(String::from)
-        .collect::<Vec<String>>();
+        .collect::<Vec<String>>()
+}
+
+pub fn solve_part_1() -> usize {
+    let lines = parse_input();
+
+    let mut valid_passport_count = 0;
+
+    let mut current_passport: Vec<String> = vec![];
+
+    for line in lines {
+        let attributes = line.split_whitespace().map(String::from).collect::<Vec<String>>();
+
+        current_passport.extend(attributes.clone());
+
+        if attributes.len() == 0 {
+            println!("{:?}", current_passport);
+
+            if current_passport.iter().any(|s| s.starts_with("cid")) {
+                println!("{:?}", current_passport);
+                if current_passport.len() == 8 {
+                    valid_passport_count += 1;
+                }
+            } else {
+                if current_passport.len() == 7 {
+                    valid_passport_count += 1;
+                }
+            }
+            current_passport = vec![];
+        }
+    }
+
+    valid_passport_count
+}
+
+
+pub fn solve_part_2() -> usize {
+    let lines = parse_input();
 
     let mut valid_passport_count = 0;
     let mut current_passport: Vec<String> = vec![];
@@ -36,9 +73,7 @@ fn main() {
         }
     }
 
-    println!("=================", );
-    println!("Valid password count : {}", valid_passport_count);
-    println!("=================", );
+    valid_passport_count
 }
 
 fn check_attribute(attr_name: &str, value: &str, function: impl Fn(&str) -> bool) -> bool {

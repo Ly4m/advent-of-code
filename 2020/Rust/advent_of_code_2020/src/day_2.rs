@@ -1,23 +1,15 @@
 use std::fs;
 
-fn main() {
-    let value = part_1();
-    println!("Part1: {}", value);
-
-    let value2 = part_2();
-    println!("Part2: {}", value2);
-}
-
-fn part_1() -> usize {
-    return fs::read_to_string("src/passwords.in")
+pub fn solve_part_1() -> usize {
+    return fs::read_to_string("inputs/day_2.in")
         .unwrap()
         .lines()
         .filter(|s| is_password_compliant(s))
         .count();
 }
 
-fn part_2() -> usize {
-    return fs::read_to_string("src/passwords.in")
+pub fn solve_part_2() -> usize {
+    return fs::read_to_string("inputs/day_2.in")
         .unwrap()
         .lines()
         .filter(|s| is_password_compliant_with_otcp(s))
@@ -61,8 +53,7 @@ fn is_password_compliant_with_otcp(line: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::is_password_compliant;
-    use crate::is_password_compliant_with_otcp;
+    use crate::day_2::{is_password_compliant, is_password_compliant_with_otcp};
 
     #[test]
     fn simple_test() {

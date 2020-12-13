@@ -2,21 +2,16 @@ use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::iter::FromIterator;
 
-fn main() {
-    let lines = fs::read_to_string("src/bags.in").unwrap().lines()
+fn parse_input() -> Vec<String> {
+    fs::read_to_string("inputs/day_7.in").unwrap().lines()
         .map(String::from)
         .map(|s| s.replace(".", "").replace(" bags", "").replace(" bag", ""))
-        .collect::<Vec<String>>();
-
-    let part_one = solve_part_one(&lines);
-    println!("{}", part_one);
-
-    let part_two = solve_part_two(&lines);
-    println!("{}", part_two);
+        .collect()
 }
 
-fn solve_part_two(lines: &Vec<String>) -> usize {
-    let rules = parse_rules(lines);
+pub fn solve_part_2() -> usize {
+    let lines = parse_input();
+    let rules = parse_rules(&lines);
     compute_sub_bags("shiny gold", &rules) - 1
 }
 
@@ -49,7 +44,8 @@ fn compute_sub_bags(current_rule: &str, all_rules: &HashMap<&str, Vec<&str>>) ->
         .sum::<usize>() + 1
 }
 
-fn solve_part_one(lines: &Vec<String>) -> usize {
+pub fn solve_part_1() -> usize {
+    let lines = &parse_input();
     let rules = parse_rules(lines);
 
     let mut bags_to_parse: HashSet<&str> = HashSet::new();
