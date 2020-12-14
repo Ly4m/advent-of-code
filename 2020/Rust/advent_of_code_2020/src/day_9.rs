@@ -2,10 +2,9 @@ use std::collections::HashSet;
 use std::fs;
 
 fn parse_input() -> Vec<usize> {
-    let lines = fs::read_to_string("inputs/day_9.in").unwrap().lines()
+    fs::read_to_string("inputs/day_9.in").unwrap().lines()
         .map(|x| x.parse::<usize>().expect("Not a number found"))
-        .collect::<Vec<usize>>();
-    lines
+        .collect()
 }
 
 pub fn solve_part_2() -> usize {
