@@ -17,7 +17,7 @@ fn parse_input() -> Vec<Vec<char>> {
 }
 
 pub fn solve_part_1() -> usize {
-    let mut array = parse_input();
+    let array = parse_input();
     let mut current_array = array.clone();
 
     loop {
@@ -68,19 +68,19 @@ fn next_array_part_1(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
 
     (next_array, is_modified)
 }
-
-fn print_array(array: &Vec<Vec<char>>) {
-    for line in array {
-        println!("{:?}", line)
-    }
-}
+// 
+// fn print_array(array: &Vec<Vec<char>>) {
+//     for line in array {
+//         println!("{:?}", line)
+//     }
+// }
 
 fn count_occupied_seat(array: &Vec<Vec<char>>) -> usize {
     array.iter().flatten().filter(|x| *x == &'#').count()
 }
 
 pub fn solve_part_2() -> usize {
-    let mut array = parse_input();
+    let array = parse_input();
     let mut current_array = array.clone();
 
     loop {

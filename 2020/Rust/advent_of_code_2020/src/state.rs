@@ -17,7 +17,7 @@ impl<'a> App<'a> {
                 " Day 9: Encoding Error",
                 " Day 10: Adapter Array",
                 " Day 11: Seating System",
-                " Day 12",
+                " Day 12: Rain Risk",
                 " Day 13",
                 " Day 14",
                 " Day 15",
