@@ -29,13 +29,13 @@ pub fn solve_part_1() -> usize {
     let directions: HashMap<char, isize> = [('E', 0), ('S', 90), ('W', 180), ('N', 270)].iter().cloned().collect();
 
     for instruction in instructions {
-        position = if instruction.action == 'F' {
-            navigate(&position, current_direction, instruction.value)
-        } else if instruction.action == 'R' || instruction.action == 'L' {
-            current_direction = turn(&current_direction, instruction.action, instruction.value, &directions);
-            position
-        } else {
-            navigate(&position, instruction.action, instruction.value)
+        position = match instruction.action {
+            'F' => navigate(&position, current_direction, instruction.value),
+            'R' | 'L' => {
+                current_direction = turn(&current_direction, instruction.action, instruction.value, &directions);
+                position
+            }
+            _ => navigate(&position, instruction.action, instruction.value)
         }
     }
 
@@ -69,5 +69,43 @@ fn navigate(position: &(isize, isize), direction: char, distance: isize) -> (isi
 }
 
 pub fn solve_part_2() -> usize {
-    0
+    let instructions = parse_input();
+    let mut waypoint_position: (isize, isize) = (10, 1);
+    let mut ship_position: (isize, isize) = (0, 0);
+
+    for instruction in instructions {
+        match instruction.action {
+            'F' => ship_position = move_ship_to_waypoint(ship_position, waypoint_position, instruction.value),
+            'R' | 'L' => waypoint_position = rotate_waypoint(waypoint_position, instruction.action, instruction.value),
+            _ => waypoint_position = navigate(&waypoint_position, instruction.action, instruction.value)
+        }
+    }
+
+    (ship_position.0.abs() + ship_position.1.abs()) as usize
+}
+
+fn move_ship_to_waypoint(ship_position: (isize, isize), waypoint_position: (isize, isize), value: isize) -> (isize, isize) {
+    (ship_position.0 + (waypoint_position.0 * value), ship_position.1 + (waypoint_position.1 * value))
+}
+
+fn rotate_waypoint(waypoint_position: (isize, isize), orientation: char, value: isize) -> (isize, isize) {
+    let move_value = if orientation == 'R' { value } else { 360 - value };
+
+    return match move_value {
+        90 => (waypoint_position.1, waypoint_position.0 * -1),
+        180 => (waypoint_position.0 * -1, waypoint_position.1 * -1),
+        270 => (waypoint_position.1 * -1, waypoint_position.0),
+        _ => panic!("Not happening")
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use crate::day_12::move_ship_to_waypoint;
+
+    #[test]
+    fn test_waypoint_forward() {
+        assert_eq!((100, 10), move_ship_to_waypoint((0, 0), (10, 1), 10))
+    }
 }

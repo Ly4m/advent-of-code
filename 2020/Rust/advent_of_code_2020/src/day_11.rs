@@ -68,7 +68,7 @@ fn next_array_part_1(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
 
     (next_array, is_modified)
 }
-// 
+//
 // fn print_array(array: &Vec<Vec<char>>) {
 //     for line in array {
 //         println!("{:?}", line)
