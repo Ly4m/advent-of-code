@@ -1,14 +1,10 @@
 use std::fs;
 
-fn parse_input() -> Vec<String> {
-    fs::read_to_string("inputs/day_11.in").expect("Missing input file")
-        .lines().map(String::from).collect()
-}
+fn parse_input() -> Vec<Vec<char>> {
+    let lines: Vec<String> = fs::read_to_string("inputs/day_11.in").expect("Missing input file")
+        .lines().map(String::from).collect();
 
-pub fn solve_part_1() -> usize {
-    let lines = parse_input();
     let width = lines.get(0).map(|l| l.len()).unwrap_or(0);
-
     let mut array = vec![vec!['.'; width]; width];
 
     for (i, line) in lines.iter().enumerate() {
@@ -17,11 +13,15 @@ pub fn solve_part_1() -> usize {
         }
     }
 
+    array
+}
+
+pub fn solve_part_1() -> usize {
+    let mut array = parse_input();
     let mut current_array = array.clone();
 
     loop {
-
-        let (new_array, is_modified) = next_array(&current_array);
+        let (new_array, is_modified) = next_array_part_1(&current_array);
         current_array = new_array;
 
         if !is_modified { break; }
@@ -30,31 +30,30 @@ pub fn solve_part_1() -> usize {
     count_occupied_seat(&current_array)
 }
 
-fn next_array(array: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
-    let mut next_array = array.clone();
+fn next_array_part_1(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
+    let mut next_array = seats.clone();
     let mut is_modified = false;
 
-    for (x, row) in array.iter().enumerate() {
+    for (x, row) in seats.iter().enumerate() {
         for (y, char) in row.iter().enumerate() {
-
             if *char == '.' { continue; }
 
             let mut counter = 0;
 
             if x > 0 {
-                if y > 0 && array[x - 1][y - 1] == '#' { counter += 1 }
-                if array[x - 1][y] == '#' { counter += 1 }
-                if y < array.len() - 1 && array[x - 1][y + 1] == '#' { counter += 1 }
+                if y > 0 && seats[x - 1][y - 1] == '#' { counter += 1 }
+                if seats[x - 1][y] == '#' { counter += 1 }
+                if y < seats.len() - 1 && seats[x - 1][y + 1] == '#' { counter += 1 }
             }
 
-            if x < array.len() -1 {
-                if y > 0 && array[x + 1][y - 1] == '#' { counter += 1 }
-                if array[x + 1][y] == '#' { counter += 1 }
-                if y < array.len() - 1 && array[x + 1][y + 1] == '#' { counter += 1 }
+            if x < seats.len() - 1 {
+                if y > 0 && seats[x + 1][y - 1] == '#' { counter += 1 }
+                if seats[x + 1][y] == '#' { counter += 1 }
+                if y < seats.len() - 1 && seats[x + 1][y + 1] == '#' { counter += 1 }
             }
 
-            if y > 0 && array[x][y - 1] == '#' { counter += 1 }
-            if y < array.len() - 1 && array[x][y + 1] == '#' { counter += 1 }
+            if y > 0 && seats[x][y - 1] == '#' { counter += 1 }
+            if y < seats.len() - 1 && seats[x][y + 1] == '#' { counter += 1 }
 
 
             if *char == 'L' && counter == 0 {
@@ -81,7 +80,64 @@ fn count_occupied_seat(array: &Vec<Vec<char>>) -> usize {
 }
 
 pub fn solve_part_2() -> usize {
-    0
+    let mut array = parse_input();
+    let mut current_array = array.clone();
+
+    loop {
+        let (new_array, is_modified) = next_array_part_2(&current_array);
+        current_array = new_array;
+
+        if !is_modified { break; }
+    }
+
+    count_occupied_seat(&current_array)
+}
+
+fn next_array_part_2(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
+    let mut next_array = seats.clone();
+    let mut is_modified = false;
+
+    for (x, row) in seats.iter().enumerate() {
+        for (y, char) in row.iter().enumerate() {
+            if *char == '.' { continue; }
+
+            let mut counter = 0;
+
+            counter += scan_in_direction(x as isize, y as isize + 1, seats, (0 as isize, 1 as isize));
+            counter += scan_in_direction(x as isize + 1, y as isize + 1, seats, (1 as isize, 1 as isize));
+            counter += scan_in_direction(x as isize + 1, y as isize, seats, (1 as isize, 0 as isize));
+            counter += scan_in_direction(x as isize, y as isize - 1, seats, (0 as isize, -1 as isize));
+            counter += scan_in_direction(x as isize + 1, y as isize - 1, seats, (1 as isize, -1 as isize));
+            counter += scan_in_direction(x as isize - 1, y as isize + -1, seats, (-1 as isize, -1 as isize));
+            counter += scan_in_direction(x as isize - 1, y as isize, seats, (-1 as isize, 0 as isize));
+            counter += scan_in_direction(x as isize - 1, y as isize + 1, seats, (-1 as isize, 1 as isize));
+
+            if *char == 'L' && counter == 0 {
+                next_array[x][y] = '#';
+                is_modified = true;
+            } else if *char == '#' && counter >= 5 {
+                next_array[x][y] = 'L';
+                is_modified = true;
+            }
+        }
+    }
+
+    (next_array, is_modified)
+}
+
+fn scan_in_direction(x: isize, y: isize, seats: &Vec<Vec<char>>, direction: (isize, isize)) -> isize {
+    let height = seats.len() as isize;
+
+    if x < 0 || y < 0 || x == height || y == height {
+        return 0;
+    }
+
+    match seats[x as usize][y as usize] {
+        '#' => return 1,
+        'L' => return 0,
+        '.' => return scan_in_direction(x + direction.0, y + direction.1, seats, direction),
+        _ => panic!("HEIN ?!"),
+    }
 }
 
 #[cfg(test)]
