@@ -33,7 +33,7 @@ pub fn solve_part_1() -> usize {
     for time in departure_time..max_wait_time {
         let bus = buses.iter().find(|bus| time % *bus == 0);
 
-        if let Some(x) = bus {
+        if let Some(_x) = bus {
             bus_id = *bus.unwrap();
             time_waited = time - departure_time;
             break;
