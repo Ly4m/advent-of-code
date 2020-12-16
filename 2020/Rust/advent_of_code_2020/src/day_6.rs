@@ -11,21 +11,21 @@ fn parse_input() -> Vec<String> {
 
 pub fn solve_part_1() -> usize {
     parse_input()
-        .split(|l| l.len() == 0)
+        .split(|l| l.is_empty())
         .map(|l| count_distinct_answers(l))
         .sum()
 }
 
 pub fn solve_part_2() -> usize {
     parse_input()
-        .split(|l| l.len() == 0)
+        .split(|l| l.is_empty())
         .map(|l| count_common_answers(l))
         .sum()
 }
 
 fn count_distinct_answers(group: &[String]) -> usize {
     let all_group_answers: Vec<char> = group.iter().flat_map(|c| c.chars()).collect();
-    let counts: HashSet<char> = HashSet::from_iter(all_group_answers.iter().map(|x| *x));
+    let counts: HashSet<char> = HashSet::from_iter(all_group_answers.iter().copied());
     counts.len()
 }
 
@@ -35,7 +35,7 @@ fn count_common_answers(group: &[String]) -> usize {
     for answer in group {
         let current_answer_chars = HashSet::from_iter(answer.chars());
         let intersection = group_answers.intersection(&current_answer_chars);
-        group_answers = HashSet::from_iter(intersection.into_iter().map(|x| *x));
+        group_answers = HashSet::from_iter(intersection.into_iter().copied());
     }
     group_answers.len()
 }

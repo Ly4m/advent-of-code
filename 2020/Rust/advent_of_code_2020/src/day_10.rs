@@ -41,7 +41,7 @@ pub fn solve_part_2() -> usize {
     let mut adapters = parse_input();
     adapters.push(0); //  Add lower limit
 
-    let mut sorted_adapter: Vec<usize> = adapters.clone();
+    let mut sorted_adapter: Vec<usize> = adapters;
     sorted_adapter.sort();
 
     sorted_adapter.push(sorted_adapter.iter().max().unwrap() + 3); // add upper limit
@@ -51,7 +51,7 @@ pub fn solve_part_2() -> usize {
     parse_tree(&sorted_adapter, 0, &mut already_computed)
 }
 
-fn parse_tree(adapters: &Vec<usize>, index: usize, already_computed: &mut HashMap<usize, usize>) -> usize {
+fn parse_tree(adapters: &[usize], index: usize, already_computed: &mut HashMap<usize, usize>) -> usize {
     if already_computed.contains_key(&index) {
         return *already_computed.get(&index).unwrap();
     }

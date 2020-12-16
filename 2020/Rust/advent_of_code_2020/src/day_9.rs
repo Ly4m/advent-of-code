@@ -49,7 +49,7 @@ pub fn solve_part_1() -> usize {
     0
 }
 
-fn two_sum_exists(report: &Vec<&usize>, &year: &usize) -> bool {
+fn two_sum_exists(report: &[&usize], &year: &usize) -> bool {
     for (index, value) in report.iter().enumerate() {
         for value2 in report[index..report.len()].iter() {
             if *value + *value2 == year {

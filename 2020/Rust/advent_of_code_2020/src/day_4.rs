@@ -22,7 +22,7 @@ pub fn solve_part_1() -> usize {
 
         current_passport.extend(attributes.clone());
 
-        if attributes.len() == 0 {
+        if attributes.is_empty() {
             println!("{:?}", current_passport);
 
             if current_passport.iter().any(|s| s.starts_with("cid")) {
@@ -30,10 +30,8 @@ pub fn solve_part_1() -> usize {
                 if current_passport.len() == 8 {
                     valid_passport_count += 1;
                 }
-            } else {
-                if current_passport.len() == 7 {
-                    valid_passport_count += 1;
-                }
+            } else if current_passport.len() == 7 {
+                valid_passport_count += 1;
             }
             current_passport = vec![];
         }
@@ -55,7 +53,7 @@ pub fn solve_part_2() -> usize {
         current_passport.extend(attributes.clone());
 
         // empty Line - end of the passport
-        if attributes.len() == 0 {
+        if attributes.is_empty() {
             let required_attr = if current_passport.iter().any(|s| s.starts_with("cid")) { 8 } else { 7 };
 
             println!("=================", );
@@ -68,7 +66,6 @@ pub fn solve_part_2() -> usize {
             } else {
                 red_ln!("REFUSED : missing attribute(s)");
             }
-
             current_passport = vec![];
         }
     }
@@ -88,19 +85,19 @@ fn check_all_attributes(passport: Vec<String>) -> bool {
     let check_byr = |x: &str| is_number_between(x, 1920, 2002);
     let check_iyr = |x: &str| is_number_between(x, 2010, 2020);
     let check_eyr = |x: &str| is_number_between(x, 2020, 2030);
-    let check_hgt = |x: &str| -> bool {
-        return match x.ends_with("in") {
-            true => is_number_between(x, 59, 76),
-            false => is_number_between(x, 150, 193),
-        }
+    let check_hgt = |x: &str| if x.ends_with("in") {
+        is_number_between(x, 59, 76)
+    } else {
+        is_number_between(x, 150, 193)
     };
+
     let hexa_code = Regex::new(r"^#[a-f0-9]{6}$").unwrap();
     let check_hcl = |x: &str| hexa_code.is_match(x);
     let check_ecl = |x: &str| ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].iter().any(|y| *y == x);
     let pid = Regex::new(r"^[0-9]{9}$").unwrap();
     let check_pid = |x: &str| pid.is_match(x);
 
-    if passport.iter().all(|attr| {
+    let check_attributes = |attr: &str| -> bool {
         let key = &attr[0..3];
         let value = &attr[4..];
 
@@ -114,7 +111,9 @@ fn check_all_attributes(passport: Vec<String>) -> bool {
             "pid" => check_attribute("pid", value, check_pid),
             _ => true // ignore unknown key
         }
-    }) {
+    };
+
+    if passport.iter().all(|x| check_attributes(x)) {
         dark_green_ln!("ACCEPTED");
         true
     } else {

@@ -19,7 +19,7 @@ fn parse_input() -> Vec<usize> {
         .collect()
 }
 
-fn repair_report(report: &Vec<usize>, year: usize) -> usize {
+fn repair_report(report: &[usize], year: usize) -> usize {
     for (index, value) in report.iter().enumerate() {
         for value2 in report[index..report.len()].iter() {
             if value + value2 == year {
@@ -27,10 +27,10 @@ fn repair_report(report: &Vec<usize>, year: usize) -> usize {
             }
         }
     }
-    return 0;
+    0
 }
 
-fn repair_report_2(report: &Vec<usize>, year: usize) -> usize {
+fn repair_report_2(report: &[usize], year: usize) -> usize {
     for (index, value) in report.iter().enumerate() {
         for (index2, value2) in report[index..report.len()].iter().enumerate() {
             // no need to iterate a third time if
@@ -43,7 +43,7 @@ fn repair_report_2(report: &Vec<usize>, year: usize) -> usize {
             }
         }
     }
-    return 0;  // should not happen
+    0  // should not happen
 }
 
 #[cfg(test)]

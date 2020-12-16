@@ -30,14 +30,14 @@ fn compute_seat_id(seat_row: usize, seat_column: usize) -> usize {
     (seat_row * 8) + seat_column
 }
 
-fn find_highest_seat_id(passes: &Vec<String>) -> usize {
+fn find_highest_seat_id(passes: &[String]) -> usize {
     passes.iter().map(|s| s.as_str())
         .map(|s| decode_boarding_pass(s))
         .map(|s| compute_seat_id(s.0, s.1))
         .max().unwrap() as usize
 }
 
-fn find_missing_seat(passes: &Vec<String>) -> usize {
+fn find_missing_seat(passes: &[String]) -> usize {
     let mut all_seats: Vec<usize> = passes.iter().map(|s| s.as_str())
         .map(|s| decode_boarding_pass(s))
         .filter(|(row, _column)| *row > 0 && *row < 127) // exclude first and last row

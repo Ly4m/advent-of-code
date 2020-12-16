@@ -18,7 +18,7 @@ fn parse_input() -> Vec<Vec<char>> {
 
 pub fn solve_part_1() -> usize {
     let array = parse_input();
-    let mut current_array = array.clone();
+    let mut current_array = array;
 
     loop {
         let (new_array, is_modified) = next_array_part_1(&current_array);
@@ -30,8 +30,8 @@ pub fn solve_part_1() -> usize {
     count_occupied_seat(&current_array)
 }
 
-fn next_array_part_1(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
-    let mut next_array = seats.clone();
+fn next_array_part_1(seats: &[Vec<char>]) -> (Vec<Vec<char>>, bool) {
+    let mut next_array = seats.to_owned();
     let mut is_modified = false;
 
     for (x, row) in seats.iter().enumerate() {
@@ -75,13 +75,13 @@ fn next_array_part_1(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
 //     }
 // }
 
-fn count_occupied_seat(array: &Vec<Vec<char>>) -> usize {
+fn count_occupied_seat(array: &[Vec<char>]) -> usize {
     array.iter().flatten().filter(|x| *x == &'#').count()
 }
 
 pub fn solve_part_2() -> usize {
     let array = parse_input();
-    let mut current_array = array.clone();
+    let mut current_array = array;
 
     loop {
         let (new_array, is_modified) = next_array_part_2(&current_array);
@@ -93,8 +93,8 @@ pub fn solve_part_2() -> usize {
     count_occupied_seat(&current_array)
 }
 
-fn next_array_part_2(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
-    let mut next_array = seats.clone();
+fn next_array_part_2(seats: &[Vec<char>]) -> (Vec<Vec<char>>, bool) {
+    let mut next_array = seats.to_owned();
     let mut is_modified = false;
 
     for (x, row) in seats.iter().enumerate() {
@@ -125,7 +125,7 @@ fn next_array_part_2(seats: &Vec<Vec<char>>) -> (Vec<Vec<char>>, bool) {
     (next_array, is_modified)
 }
 
-fn scan_in_direction(x: isize, y: isize, seats: &Vec<Vec<char>>, direction: (isize, isize)) -> isize {
+fn scan_in_direction(x: isize, y: isize, seats: &[Vec<char>], direction: (isize, isize)) -> isize {
     let height = seats.len() as isize;
 
     if x < 0 || y < 0 || x == height || y == height {
@@ -133,9 +133,9 @@ fn scan_in_direction(x: isize, y: isize, seats: &Vec<Vec<char>>, direction: (isi
     }
 
     match seats[x as usize][y as usize] {
-        '#' => return 1,
-        'L' => return 0,
-        '.' => return scan_in_direction(x + direction.0, y + direction.1, seats, direction),
+        '#' => 1,
+        'L' => 0,
+        '.' => scan_in_direction(x + direction.0, y + direction.1, seats, direction),
         _ => panic!("HEIN ?!"),
     }
 }

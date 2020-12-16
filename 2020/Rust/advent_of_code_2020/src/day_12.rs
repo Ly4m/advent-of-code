@@ -55,7 +55,7 @@ fn turn(current_direction: &char, orientation: char, value: isize, directions: &
 }
 
 fn navigate(position: &(isize, isize), direction: char, distance: isize) -> (isize, isize) {
-    let mut new_position = position.clone();
+    let mut new_position = *position;
 
     match direction {
         'N' => new_position.1 += distance,
@@ -91,10 +91,10 @@ fn move_ship_to_waypoint(ship_position: (isize, isize), waypoint_position: (isiz
 fn rotate_waypoint(waypoint_position: (isize, isize), orientation: char, value: isize) -> (isize, isize) {
     let move_value = if orientation == 'R' { value } else { 360 - value };
 
-    return match move_value {
-        90 => (waypoint_position.1, waypoint_position.0 * -1),
-        180 => (waypoint_position.0 * -1, waypoint_position.1 * -1),
-        270 => (waypoint_position.1 * -1, waypoint_position.0),
+    match move_value {
+        90 => (waypoint_position.1, -waypoint_position.0),
+        180 => (-waypoint_position.0, -waypoint_position.1),
+        270 => (-waypoint_position.1, waypoint_position.0),
         _ => panic!("Not happening")
     }
 }

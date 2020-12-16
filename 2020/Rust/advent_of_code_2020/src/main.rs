@@ -36,7 +36,7 @@ fn main() {
         let part = Select::with_theme(&ColorfulTheme::default())
             .with_prompt("Pick a part ")
             .default(0)
-            .items(&vec!["part 1", "part 2"])
+            .items(&["part 1", "part 2"])
             .interact()
             .map(|x| x + 1)
             .unwrap();
@@ -66,6 +66,8 @@ fn main() {
             (11, 2) => run_bench(day_11::solve_part_2),
             (12, 1) => run_bench(day_12::solve_part_1),
             (12, 2) => run_bench(day_12::solve_part_2),
+            (13, 1) => run_bench(day_13::solve_part_1),
+            (13, 2) => run_bench(day_13::solve_part_2),
             _ => println!("Not yet Implemented")
         }
 

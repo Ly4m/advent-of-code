@@ -27,10 +27,10 @@ pub fn solve_part_2() -> usize {
     count
 }
 
-fn count_trees(lines: &Vec<String>, width: usize, down_step: usize, right_step: usize) -> usize {
+fn count_trees(lines: &[String], width: usize, down_step: usize, right_step: usize) -> usize {
     let mut position = 0;
 
-    return lines
+    lines
         .iter()
         .skip(down_step)
         .step_by(down_step)
@@ -39,6 +39,6 @@ fn count_trees(lines: &Vec<String>, width: usize, down_step: usize, right_step: 
             position %= width; // prevent out of bound
 
             l.chars().nth(position).unwrap() == '#' // if tree
-        }).count();
+        }).count()
 }
 

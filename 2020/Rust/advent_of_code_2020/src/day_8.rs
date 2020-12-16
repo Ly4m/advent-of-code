@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::fs;
 
 fn parse_input() -> Vec<Instruction> {
-    let lines = fs::read_to_string("inputs/day_8.in").unwrap().lines()
+    let lines: Vec<String> = fs::read_to_string("inputs/day_8.in").unwrap().lines()
         .map(String::from)
         .collect();
     parse_into_instructions(&lines)
@@ -15,7 +15,7 @@ struct Instruction {
     argument: isize,
 }
 
-fn parse_into_instructions(lines: &Vec<String>) -> Vec<Instruction> {
+fn parse_into_instructions(lines: &[String]) -> Vec<Instruction> {
     lines
         .iter()
         .map(|line| -> Instruction {
@@ -32,7 +32,7 @@ pub fn solve_part_2() -> usize {
     let instructions = &parse_input();
     let instruction_count = instructions
         .iter()
-        .map(|instruction| if instruction.operation.as_str() != "acc" { true } else { false })
+        .map(|instruction| instruction.operation.as_str() != "acc")
         .collect::<Vec<bool>>();
 
     for (index, to_mutate) in instruction_count.iter().enumerate() {
@@ -55,7 +55,7 @@ pub fn solve_part_2() -> usize {
     0 // No result found !
 }
 
-fn run_program(instructions: &Vec<Instruction>) -> usize {
+fn run_program(instructions: &[Instruction]) -> usize {
     let mut accumulator: isize = 0;
     let mut index: isize = 0;
 

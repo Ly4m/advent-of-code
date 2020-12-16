@@ -15,7 +15,7 @@ pub fn solve_part_2() -> usize {
     compute_sub_bags("shiny gold", &rules) - 1
 }
 
-fn parse_rules(lines: &Vec<String>) -> HashMap<&str, Vec<&str>> {
+fn parse_rules(lines: &[String]) -> HashMap<&str, Vec<&str>> {
     HashMap::from_iter(
         lines
             .iter()
@@ -37,7 +37,7 @@ fn compute_sub_bags(current_rule: &str, all_rules: &HashMap<&str, Vec<&str>>) ->
     sub_bags
         .iter()
         .map(|bag| {
-            let bag_array = bag.split(" ").collect::<Vec<&str>>();
+            let bag_array = bag.split(' ').collect::<Vec<&str>>();
             (bag_array[0].parse::<usize>().unwrap(), format!("{} {}", bag_array[1], bag_array[2]))
         })
         .map(|(count, bag_name)| count * compute_sub_bags(&bag_name[..], &all_rules))
@@ -59,7 +59,7 @@ pub fn solve_part_1() -> usize {
         for (bag_name, bag_content) in &rules {
             if bag_content.contains(&"no other") { continue }
 
-            let current_bag: HashSet<&str> = HashSet::from_iter(bag_content.iter().map(|x| *x));
+            let current_bag: HashSet<&str> = HashSet::from_iter(bag_content.iter().copied());
 
             if current_bag.iter().any(|bag| bags_to_parse.iter().any(|sub_bag| bag.contains(sub_bag))) {
                 parent_bags.insert(*bag_name);

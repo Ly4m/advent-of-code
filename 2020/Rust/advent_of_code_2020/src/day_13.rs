@@ -7,7 +7,7 @@ fn parse_input() -> (usize, Vec<usize>) {
         .collect();
 
     let time = lines.get(0).map(|x| x.parse::<usize>()).expect("Time missing").unwrap();
-    let buses = lines.get(1).map(|line| line.split(",")
+    let buses = lines.get(1).map(|line| line.split(',')
         .filter(|x| x != &"x").map(|id| id.parse::<usize>().expect("Not a number"))
         .collect::<Vec<usize>>()).expect("Missing bus IDs");
 
@@ -20,7 +20,7 @@ fn parse_input_part_2() -> Vec<usize> {
         .map(String::from)
         .collect();
 
-    lines.get(1).map(|line| line.split(",").map(|x| if x == "x" { 0 } else { x.parse::<usize>().unwrap() }).collect::<Vec<usize>>()).expect("MCSTN")
+    lines.get(1).map(|line| line.split(',').map(|x| if x == "x" { 0 } else { x.parse::<usize>().unwrap() }).collect::<Vec<usize>>()).expect("MCSTN")
 }
 
 pub fn solve_part_1() -> usize {
@@ -31,11 +31,11 @@ pub fn solve_part_1() -> usize {
 
 
     for time in departure_time..max_wait_time {
-        let bus = buses.iter().find(|bus| &time % *bus == 0);
+        let bus = buses.iter().find(|bus| time % *bus == 0);
 
-        if bus.is_some() {
+        if let Some(x) = bus {
             bus_id = *bus.unwrap();
-            time_waited = &time - &departure_time;
+            time_waited = time - departure_time;
             break;
         }
     }
@@ -54,14 +54,13 @@ pub fn solve_part_2() -> usize {
         if bus == 0 { continue } // Workaround to manage X's
 
         loop {
-            if ((&current_time + index) % bus) == 0 { // if current time + time offset is a multiple of the bus
-                step = step * bus;
+            if ((current_time + index) % bus) == 0 { // if current time + time offset is a multiple of the bus
+                step *= bus;
                 break;
             }
             current_time += step; // increment by step
         }
     }
-
     current_time
 }
 
