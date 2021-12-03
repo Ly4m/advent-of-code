@@ -35,7 +35,7 @@ fn count_common_answers(group: &[String]) -> usize {
     for answer in group {
         let current_answer_chars = HashSet::from_iter(answer.chars());
         let intersection = group_answers.intersection(&current_answer_chars);
-        group_answers = HashSet::from_iter(intersection.into_iter().copied());
+        group_answers = HashSet::from_iter(intersection.copied());
     }
     group_answers.len()
 }

@@ -11,7 +11,7 @@ fn parse_input() -> Vec<usize> {
 pub fn solve_part_1() -> usize {
     let adapters = parse_input();
 
-    let mut sorted_adapter: Vec<usize> = adapters.clone();
+    let mut sorted_adapter: Vec<usize> = adapters;
     sorted_adapter.sort();
 
     sorted_adapter.push(sorted_adapter.iter().max().unwrap() + 3);
