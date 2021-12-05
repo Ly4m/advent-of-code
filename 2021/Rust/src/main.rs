@@ -5,6 +5,7 @@ use std::time::Instant;
 
 mod state;
 mod day_1;
+mod day_2;
 
 
 fn main() {
@@ -35,6 +36,8 @@ fn main() {
         match (day, part) {
             (1, 1) => run_bench(day_1::solve_part_1),
             (1, 2) => run_bench(day_1::solve_part_2),
+            (2, 1) => run_bench(day_2::solve_part_1),
+            (2, 2) => run_bench(day_2::solve_part_2),
             _ => println!("Not yet Implemented")
         }
 

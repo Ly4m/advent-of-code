@@ -7,6 +7,7 @@ impl<'a> App<'a> {
         App {
             days: vec![
                 " Day 1: Sonar Sweep",
+                " Day 2: Dive!",
             ]
         }
     }
