@@ -6,6 +6,7 @@ use std::time::Instant;
 mod state;
 mod day_1;
 mod day_2;
+mod day_3;
 
 
 fn main() {
@@ -38,6 +39,8 @@ fn main() {
             (1, 2) => run_bench(day_1::solve_part_2),
             (2, 1) => run_bench(day_2::solve_part_1),
             (2, 2) => run_bench(day_2::solve_part_2),
+            (3, 1) => run_bench(day_3::solve_part_1),
+            (3, 2) => run_bench(day_3::solve_part_2),
             _ => println!("Not yet Implemented")
         }
 
