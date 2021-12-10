@@ -29,11 +29,11 @@ fn check_power_consumption(inputs: Vec<String>) -> usize {
     usize::from_str_radix(gamma.as_str(), 2).unwrap() * usize::from_str_radix(epsilon.as_str(), 2).unwrap()
 }
 
-fn reverse_bit_string(bits: &String) -> String {
+fn reverse_bit_string(bits: &str) -> String {
     bits.chars().map(|x| if x == '1' { "0" } else { "1" }).collect()
 }
 
-fn calculate_gamma_with_equality_override(inputs: &Vec<String>) -> String {
+fn calculate_gamma_with_equality_override(inputs: &[String]) -> String {
     let equality_override = "1".to_string();
     let vector_length = inputs.get(0).unwrap().len();
     let half_input_length = inputs.len() as f32 / 2f32;
@@ -45,7 +45,7 @@ fn calculate_gamma_with_equality_override(inputs: &Vec<String>) -> String {
     }).collect()
 }
 
-fn calculate_epsilon_with_equality_override(inputs: &Vec<String>) -> String {
+fn calculate_epsilon_with_equality_override(inputs: &[String]) -> String {
     let equality_override = "0".to_string();
     let vector_length = inputs.get(0).unwrap().len();
     let half_input_length = inputs.len() as f32 / 2f32;
@@ -57,7 +57,7 @@ fn calculate_epsilon_with_equality_override(inputs: &Vec<String>) -> String {
     }).collect()
 }
 
-fn count_bits(inputs: &Vec<String>, vector_length: usize) -> Vec<f32> {
+fn count_bits(inputs: &[String], vector_length: usize) -> Vec<f32> {
     let inputs_as_u32: Vec<Vec<f32>> = inputs
         .iter()
         .map(|x| x.chars().map(|y| y.to_digit(10).unwrap() as f32).collect())
@@ -74,8 +74,8 @@ fn count_bits(inputs: &Vec<String>, vector_length: usize) -> Vec<f32> {
     aggregator
 }
 
-fn process_rating(inputs: &Vec<String>, index: usize, f: fn(&Vec<String>) -> String, equality_override: char) -> String {
-    if inputs.len() == 1 as usize {
+fn process_rating(inputs: &[String], index: usize, f: fn(&[String]) -> String, equality_override: char) -> String {
+    if inputs.len() == 1_usize {
         return inputs.get(0).unwrap().to_string();
     }
 
@@ -125,20 +125,20 @@ mod tests {
 
     #[test]
     fn should_find_oxygen_rating() {
-        let data = vec![
-            "00100",
-            "11110",
-            "10110",
-            "10111",
-            "10101",
-            "01111",
-            "00111",
-            "11100",
-            "10000",
-            "11001",
-            "00010",
-            "01010",
-        ].iter().map(|x| x.to_string()).collect();
+        let data = [
+            "00100".to_string(),
+            "11110".to_string(),
+            "10110".to_string(),
+            "10111".to_string(),
+            "10101".to_string(),
+            "01111".to_string(),
+            "00111".to_string(),
+            "11100".to_string(),
+            "10000".to_string(),
+            "11001".to_string(),
+            "00010".to_string(),
+            "01010".to_string(),
+        ];
 
         let result = process_rating(&data, 0, calculate_gamma_with_equality_override, '1');
         assert_eq!("10111".to_string(), result);
