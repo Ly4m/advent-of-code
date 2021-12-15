@@ -14,14 +14,17 @@ fn parse_numbers_to_draw(numbers: &str) -> Vec<u8> {
 fn parse_boards(input: &str) -> Vec<Board> {
     let lines: Vec<Vec<Number>> = input.lines().skip(1)
         .filter(|x| !x.is_empty())
-        .map(|x| -> Vec<u8> x.split_whitespace().filter_map(|x| x.parse().ok()).collect())
-        .map(|x| -> Vec<Number> x.iter().map(|value| -> Number {
-            Number {
-                value: *value,
-                marked: false,
-            }
-        }).collect()
-        ).collect();
+        .map(|x| -> Vec<u8> {
+            x.split_whitespace().filter_map(|x| x.parse().ok()).collect()
+        })
+        .map(|x| -> Vec<Number> {
+            x.iter().map(|value| -> Number {
+                Number {
+                    value: *value,
+                    marked: false,
+                }
+            }).collect()
+        }).collect();
 
     lines.chunks(5).map(|grid| {
         Board {
@@ -106,7 +109,7 @@ pub fn solve_part_1() -> usize {
             };
         }
     }
-    
+
     0
 }
 
