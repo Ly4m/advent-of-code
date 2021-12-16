@@ -9,6 +9,7 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 
 
 fn main() {
@@ -47,6 +48,8 @@ fn main() {
             (4, 2) => run_bench(day_4::solve_part_2),
             (5, 1) => run_bench(day_5::solve_part_1),
             (5, 2) => run_bench(day_5::solve_part_2),
+            (6, 1) => run_bench_release(day_6::solve_part_1, false),
+            (6, 2) => run_bench_release(day_6::solve_part_2, false),
             _ => println!("Not yet Implemented")
         }
 
@@ -65,6 +68,18 @@ fn run_bench(f: fn() -> usize) {
     println!("\n");
     let start = Instant::now();
     let result = f();
+    let duration = start.elapsed();
+    println!("\n|----------------------------------------");
+    println!("|Result: {}", result);
+    println!("|Elapsed time: {:?}", duration);
+    println!("|----------------------------------------");
+}
+
+
+fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
+    println!("\n");
+    let start = Instant::now();
+    let result = f(test_mode);
     let duration = start.elapsed();
     println!("\n|----------------------------------------");
     println!("|Result: {}", result);

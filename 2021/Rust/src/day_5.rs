@@ -12,12 +12,12 @@ fn parse_input() -> Vec<((usize, usize), (usize, usize))> {
 }
 
 fn parse_position(position: &str) -> (usize, usize) {
-    let mut split = position.trim().split(",");
+    let mut split = position.trim().split(',');
     (split.next().map(|x| x.parse::<usize>()).unwrap().unwrap(), split.next().map(|x| x.parse::<usize>()).unwrap().unwrap())
 }
 
-fn mark_positions(istr: ((usize, usize), (usize, usize)), positions: &Vec<Vec<usize>>, with_diagonal: bool) -> Vec<Vec<usize>> {
-    let mut new_positions = positions.clone();
+fn mark_positions(istr: ((usize, usize), (usize, usize)), positions: &[Vec<usize>], with_diagonal: bool) -> Vec<Vec<usize>> {
+    let mut new_positions = positions.to_owned();
 
     if istr.0.0 == istr.1.0 {
         if istr.0.1 > istr.1.1 {
@@ -69,7 +69,7 @@ fn mark_positions(istr: ((usize, usize), (usize, usize)), positions: &Vec<Vec<us
     new_positions
 }
 
-fn count_dangerous_positions(position: &Vec<Vec<usize>>) -> usize {
+fn count_dangerous_positions(position: &[Vec<usize>]) -> usize {
     let mut count = 0_usize;
 
     for y in position {
@@ -118,6 +118,6 @@ mod tests {
     #[test]
     fn part_2() {
         let result = solve_part_2();
-        assert_eq!(0, result)
+        assert_eq!(19771, result)
     }
 }
