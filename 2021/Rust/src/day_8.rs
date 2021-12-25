@@ -43,22 +43,21 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 
         let six = input.iter()
             .filter(|x| x.len() == 6)
-            .filter(|x| translation_map.get(&1).unwrap().clone().chars().any(|c1| x.chars().find(|y| *y == c1).is_none()))
-            .next().unwrap();
+            .find(|x| translation_map.get(&1).unwrap().clone().chars().any(|c1| !x.chars().any(|y| y == c1)))
+            .expect("Six not found");
 
         let zero = input.iter()
             .filter(|x| x.len() == 6)
             .filter(|x| *x != six)
-            .filter(|x| translation_map.get(&4).unwrap().clone().chars().any(|c1| x.chars().find(|y| *y == c1).is_none()))
-            .next().unwrap();
+            .find(|x| translation_map.get(&4).unwrap().clone().chars().any(|c1| !x.chars().any(|y| y == c1)))
+            .expect("Zero not found");
 
 
         //find 6 and 9
         let one = translation_map.get(&1).unwrap().clone();
         let nine = input.iter()
             .filter(|x| x.len() == 6)
-            .filter(|x| *x != zero && *x != six)
-            .next()
+            .find(|x| *x != zero && *x != six)
             .expect("missing 9");
 
         translation_map.insert(0, zero.clone());
@@ -68,17 +67,17 @@ pub fn solve_part_2(test_mode: bool) -> usize {
         // 3
         let three = input.iter()
             .filter(|x| x.len() == 5)
-            .find(|x| one.chars().all(|y| x.chars().find(|z| y == *z).is_some()))
+            .find(|x| one.chars().all(|y| x.chars().any(|z| y == z)))
             .expect("missing 3");
 
 
         //find middle
         let middle = *diff_string(translation_map.get(&8).unwrap(), translation_map.get(&0).unwrap())
-            .iter().next().unwrap();
+            .get(0).expect("Middle segment not found");
 
         //find top left
         let top_left = *diff_string(translation_map.get(&4).unwrap(), translation_map.get(&1).unwrap())
-            .iter().filter(|x| **x != middle).next().unwrap();
+            .iter().find(|x| **x != middle).expect("Top left segment not found");
 
         let five = input.iter()
             .filter(|x| x.len() == 5)
@@ -87,20 +86,20 @@ pub fn solve_part_2(test_mode: bool) -> usize {
             .expect("missing 5");
 
         let two = input.iter()
-            .filter(|x| x.len() == 5 && *x != five && *x != three)
-            .next().expect("missing 2");
+            .find(|x| x.len() == 5 && *x != five && *x != three)
+            .expect("missing 2");
 
         translation_map.insert(3, three.clone());
         translation_map.insert(2, two.clone());
         translation_map.insert(5, five.clone());
 
-        output_sum += translate_output(&output, &translation_map);
+        output_sum += translate_output(output, &translation_map);
     }
 
     output_sum
 }
 
-fn translate_output(output: &Vec<String>, translation_map: &HashMap<usize, String>) -> usize {
+fn translate_output(output: &[String], translation_map: &HashMap<usize, String>) -> usize {
     let values: Vec<String> = output.iter().map(|c| {
         translation_map.iter()
             .find_map(|(key, val)| if compare_string_char(val, c) {
@@ -115,12 +114,12 @@ fn translate_output(output: &Vec<String>, translation_map: &HashMap<usize, Strin
     values.join("").parse().expect("Unexpected input")
 }
 
-fn compare_string_char(a: &String, b: &String) -> bool {
-    a.chars().into_iter().all(|ca| b.chars().find(|ba| *ba == ca).is_some()) && b.chars().into_iter().all(|ca| a.chars().find(|ba| *ba == ca).is_some())
+fn compare_string_char(a: &str, b: &str) -> bool {
+    a.chars().into_iter().all(|ca| b.chars().any(|ba| ba == ca)) && b.chars().into_iter().all(|ca| a.chars().any(|ba| ba == ca))
 }
 
-fn diff_string(a: &String, b: &String) -> Vec<char> {
-    a.chars().filter(|x| b.chars().find(|y| y == x).is_none()).collect()
+fn diff_string(a: &str, b: &str) -> Vec<char> {
+    a.chars().filter(|x| !b.chars().any(|y| y == *x)).collect()
 }
 
 #[cfg(test)]

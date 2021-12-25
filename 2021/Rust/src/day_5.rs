@@ -21,13 +21,12 @@ fn mark_positions(istr: ((usize, usize), (usize, usize)), positions: &[Vec<usize
 
     if istr.0.0 == istr.1.0 {
         if istr.0.1 > istr.1.1 {
-            for x in istr.1.1..=istr.0.1 {
-                new_positions[x][istr.0.0] += 1;
-            }
+            new_positions.iter_mut()
+                .take(istr.0.1 + 1).skip(istr.1.1)
+                .for_each(|x| x[istr.0.0] += 1);
         } else {
-            for x in istr.0.1..=istr.1.1 {
-                new_positions[x][istr.0.0] += 1;
-            }
+            new_positions.iter_mut().take(istr.1.1 + 1).skip(istr.0.1)
+                .for_each(|x| x[istr.0.0] += 1);
         }
     } else if istr.0.1 == istr.1.1 {
         if istr.0.0 > istr.1.0 {
