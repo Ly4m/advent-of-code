@@ -13,7 +13,7 @@ fn parse_input(test_mode: bool) -> Vec<usize> {
 pub fn solve_part_1(test_mode: bool) -> usize {
     let crab_positions = parse_input(test_mode);
     let max = *crab_positions.iter().max().expect("Max not found");
-    let min = *crab_positions.iter().min().expect("Max not found");
+    let min = *crab_positions.iter().min().expect("Min not found");
 
     (min..=max).into_iter()
         .map(|pos| calculate_fuel_for_position(&pos, &crab_positions))
