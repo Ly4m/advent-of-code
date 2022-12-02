@@ -1,19 +1,17 @@
-use dialoguer::{Confirm, Select, theme::ColorfulTheme};
+use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
 use std::time::Instant;
 
-mod state;
 mod day_1;
-
+mod state;
 
 fn main() {
     let app = App::new();
 
     println!("===============================================================");
-    println!(" 🦌 ⭐   Welcome to Ly4m's 2022 - Advent of Code runner ! 🎄 \n");
+    println!(" 🦌 ⭐   Welcome to Ly4m's 2022 - Advent of Code runner ! 🎄   ");
     println!("===============================================================");
-
 
     loop {
         let day = Select::with_theme(&ColorfulTheme::default())
@@ -35,7 +33,7 @@ fn main() {
         match (day, part) {
             (1, 1) => run_bench_release(day_1::solve_part_1, false),
             (1, 2) => run_bench_release(day_1::solve_part_2, false),
-            _ => println!("Not yet Implemented")
+            _ => println!("Not yet Implemented"),
         }
 
         if !Confirm::with_theme(&ColorfulTheme::default())
@@ -49,17 +47,16 @@ fn main() {
     }
 }
 
-fn run_bench(f: fn() -> usize) {
-    println!("\n");
-    let start = Instant::now();
-    let result = f();
-    let duration = start.elapsed();
-    println!("\n|----------------------------------------");
-    println!("|Result: {}", result);
-    println!("|Elapsed time: {:?}", duration);
-    println!("|----------------------------------------");
-}
-
+// fn run_bench(f: fn() -> usize) {
+//     println!("\n");
+//     let start = Instant::now();
+//     let result = f();
+//     let duration = start.elapsed();
+//     println!("\n|----------------------------------------");
+//     println!("|Result: {}", result);
+//     println!("|Elapsed time: {:?}", duration);
+//     println!("|----------------------------------------");
+// }
 
 fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
     println!("\n");
@@ -71,4 +68,3 @@ fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
     println!("|Elapsed time: {:?}", duration);
     println!("|----------------------------------------");
 }
-
