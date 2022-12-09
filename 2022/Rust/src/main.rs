@@ -1,10 +1,13 @@
+extern crate core;
+
 use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
 use std::time::Instant;
 
-mod day_1;
 mod state;
+mod day_2;
+mod day_1;
 
 fn main() {
     let app = App::new();
@@ -33,6 +36,8 @@ fn main() {
         match (day, part) {
             (1, 1) => run_bench_release(day_1::solve_part_1, false),
             (1, 2) => run_bench_release(day_1::solve_part_2, false),
+            (2, 1) => run_bench_release(day_2::solve_part_1, false),
+            (2, 2) => run_bench_release(day_2::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 
@@ -46,17 +51,6 @@ fn main() {
         }
     }
 }
-
-// fn run_bench(f: fn() -> usize) {
-//     println!("\n");
-//     let start = Instant::now();
-//     let result = f();
-//     let duration = start.elapsed();
-//     println!("\n|----------------------------------------");
-//     println!("|Result: {}", result);
-//     println!("|Elapsed time: {:?}", duration);
-//     println!("|----------------------------------------");
-// }
 
 fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
     println!("\n");
