@@ -5,7 +5,8 @@ pub struct App<'a> {
 impl<'a> App<'a> {
     pub(crate) fn new() -> App<'a> {
         App {
-            days: vec![" Day 1: Trebuchet?! ⚖️"],
+            days: vec![" Day 1: Trebuchet?! ☄️",
+                       " Day 2: Cube Conundrum 🟥🟩🟦"],
         }
     }
 }
