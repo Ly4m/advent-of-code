@@ -1,9 +1,13 @@
-use std::{io};
 use std::fs::File;
+use std::io;
 use std::io::BufRead;
 
 fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = Game> {
-    let path = if test_mode { format!("inputs_test/day_2_{}.in", part) } else { "inputs/day_2.in".to_owned() };
+    let path = if test_mode {
+        format!("inputs_test/day_2_{}.in", part)
+    } else {
+        "inputs/day_2.in".to_owned()
+    };
     let file = File::open(path).unwrap();
     let reader = io::BufReader::new(file);
 
@@ -26,19 +30,35 @@ fn parse_line(line: &str) -> Game {
                 let count: i8 = color_split[0].parse().unwrap_or(0);
 
                 match color_split[1] {
-                    "red" => if red <= count { red = count },
-                    "blue" => if blue <= count { blue = count },
-                    "green" => if green <= count { green = count },
+                    "red" => {
+                        if red <= count {
+                            red = count
+                        }
+                    }
+                    "blue" => {
+                        if blue <= count {
+                            blue = count
+                        }
+                    }
+                    "green" => {
+                        if green <= count {
+                            green = count
+                        }
+                    }
                     _ => (),
                 }
-
             }
         }
     }
 
     let id: i8 = id_part.replace("Game ", "").parse().unwrap_or(0);
 
-    Game { id, red, blue, green }
+    Game {
+        id,
+        red,
+        blue,
+        green,
+    }
 }
 
 #[derive(Debug)]

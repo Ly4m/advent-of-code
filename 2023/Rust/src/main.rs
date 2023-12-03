@@ -5,10 +5,10 @@ use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 use crate::state::App;
 use std::time::Instant;
 
-mod state;
 mod day_1;
 mod day_2;
 mod day_3;
+mod state;
 
 fn main() {
     let app = App::new();
@@ -65,4 +65,3 @@ fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
     println!("|Elapsed time: {:?}", duration);
     println!("|----------------------------------------");
 }
-

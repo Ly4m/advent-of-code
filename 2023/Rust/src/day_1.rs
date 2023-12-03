@@ -1,9 +1,13 @@
-use std::{io};
 use std::fs::File;
+use std::io;
 use std::io::BufRead;
 
-fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = String>  {
-    let path = if test_mode { format!("inputs_test/day_1_{}.in", part) } else { "inputs/day_1.in".to_owned() };
+fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = String> {
+    let path = if test_mode {
+        format!("inputs_test/day_1_{}.in", part)
+    } else {
+        "inputs/day_1.in".to_owned()
+    };
     let file = File::open(path).unwrap();
     let reader = io::BufReader::new(file);
 
@@ -34,8 +38,8 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 }
 
 fn find_first_and_last_digit_sum(line: String) -> usize {
-    let mut num_1:char = char::default();
-    let mut num_2:char = char::default();
+    let mut num_1: char = char::default();
+    let mut num_2: char = char::default();
 
     for c in line.chars() {
         if c.is_ascii_digit() {
@@ -66,8 +70,6 @@ pub fn interpolate_numbers(mut line: String) -> String {
     line = line.replace("nine", "n9e");
     line
 }
-
-
 
 #[cfg(test)]
 mod tests {
