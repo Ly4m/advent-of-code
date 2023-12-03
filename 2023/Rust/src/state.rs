@@ -8,7 +8,7 @@ impl<'a> App<'a> {
             days: vec![
                 " Day 1: Trebuchet?! ☄️",
                 " Day 2: Cube Conundrum 🟥🟩🟦",
-                " Day 3: TODO",
+                " Day 3: Gear Ratios ⚙️",
                 " Day 4: TODO",
                 " Day 5: TODO",
                 " Day 6: TODO",
