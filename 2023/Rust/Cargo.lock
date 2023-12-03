@@ -9,6 +9,7 @@ dependencies = [
  "colour",
  "dialoguer",
  "indicatif",
+ "log",
  "num",
  "regex",
  "time",

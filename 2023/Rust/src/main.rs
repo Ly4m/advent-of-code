@@ -8,6 +8,7 @@ use std::time::Instant;
 mod state;
 mod day_1;
 mod day_2;
+mod day_3;
 
 fn main() {
     let app = App::new();
@@ -38,6 +39,8 @@ fn main() {
             (1, 2) => run_bench_release(day_1::solve_part_2, false),
             (2, 1) => run_bench_release(day_2::solve_part_1, false),
             (2, 2) => run_bench_release(day_2::solve_part_2, false),
+            (3, 1) => run_bench_release(day_3::solve_part_1, false),
+            (3, 2) => run_bench_release(day_3::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 
