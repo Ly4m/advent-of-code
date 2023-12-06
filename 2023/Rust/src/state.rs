@@ -10,7 +10,7 @@ impl<'a> App<'a> {
                 " Day 2: Cube Conundrum 🟥🟩🟦",
                 " Day 3: Gear Ratios ⚙️",
                 " Day 4: Scratchcards 🗃",
-                " Day 5: TODO",
+                " Day 5: If You Give A Seed A Fertilizer 🌱",
                 " Day 6: TODO",
                 " Day 7: TODO",
             ],
