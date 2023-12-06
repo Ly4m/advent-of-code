@@ -10,6 +10,7 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 mod state;
 
 fn main() {
@@ -47,6 +48,8 @@ fn main() {
             (4, 2) => run_bench_release(day_4::solve_part_2, false),
             (5, 1) => run_bench_release(day_5::solve_part_1, false),
             (5, 2) => run_bench_release(day_5::solve_part_2, false),
+            (6, 1) => run_bench_release(day_6::solve_part_1, false),
+            (6, 2) => run_bench_release(day_6::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 

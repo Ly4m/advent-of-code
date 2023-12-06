@@ -28,7 +28,8 @@ fn parse_seeds(line: &str) -> Vec<i64> {
 }
 
 fn parse_map(line: &str) -> Map {
-    let params = line.split_whitespace()
+    let params = line
+        .split_whitespace()
         .map(|s| s.trim().parse::<i64>().unwrap())
         .collect::<Vec<i64>>();
     let dest_range = params[0];
@@ -38,7 +39,7 @@ fn parse_map(line: &str) -> Map {
     Map {
         dest_range,
         source_range,
-        range_length
+        range_length,
     }
 }
 
@@ -68,7 +69,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
         if line.is_empty() {
             continue;
         }
-        if line.ends_with(":"){
+        if line.ends_with(":") {
             if !almanac_step.is_empty() {
                 seeds = process_seed(seeds, &almanac_step);
             }
@@ -76,7 +77,6 @@ pub fn solve_part_1(test_mode: bool) -> usize {
         } else {
             almanac_step.push(parse_map(&line));
         }
-
     }
     seeds = process_seed(seeds, &almanac_step);
     seeds.into_iter().min().unwrap() as usize
@@ -88,7 +88,7 @@ pub fn solve_part_2(_test_mode: bool) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::day_5::{Map, process_seed, solve_part_1, solve_part_2};
+    use crate::day_5::{process_seed, solve_part_1, solve_part_2, Map};
 
     #[test]
     fn part_1() {
@@ -101,14 +101,14 @@ mod tests {
         let map_2 = Map {
             dest_range: 50,
             source_range: 98,
-            range_length: 2
+            range_length: 2,
         };
         let map_1 = Map {
             dest_range: 52,
             source_range: 50,
-            range_length: 48
+            range_length: 48,
         };
-        let result = process_seed(vec![79,14,55,13], &vec![map_2, map_1]);
+        let result = process_seed(vec![79, 14, 55, 13], &vec![map_2, map_1]);
         assert_eq!(result, vec![81, 14, 57, 13]);
     }
 
