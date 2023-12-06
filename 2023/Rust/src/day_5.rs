@@ -82,8 +82,43 @@ pub fn solve_part_1(test_mode: bool) -> usize {
     seeds.into_iter().min().unwrap() as usize
 }
 
-pub fn solve_part_2(_test_mode: bool) -> usize {
-    0
+pub fn solve_part_2(test_mode: bool) -> usize {
+    let mut lines = parse_input(test_mode, 2);
+
+    let base_seeds = parse_seeds(lines.next().unwrap().as_str());
+    let seeds_ranges = base_seeds.chunks(2).map(|sr| (sr[0], sr[1])).collect::<Vec<(i64, i64)>>();
+
+    let mut mins= vec![];
+
+    for range in seeds_ranges {
+
+
+        let mut lines = parse_input(test_mode, 2);
+        lines.next();
+
+        let mut seeds: Vec<i64> = (range.0..(range.0 + range.1 - 1)).collect();
+
+        let mut almanac_step: Vec<Map> = vec![];
+        for line in lines {
+            if line.is_empty() {
+                continue;
+            }
+            if line.ends_with(":") {
+                if !almanac_step.is_empty() {
+                    seeds = process_seed(seeds, &almanac_step);
+                }
+                almanac_step = vec![];
+            } else {
+                almanac_step.push(parse_map(&line));
+            }
+        }
+        seeds = process_seed(seeds, &almanac_step);
+
+        mins.push(seeds.into_iter().min().unwrap() as usize);
+        println!("{:?}", range);
+    }
+
+    *mins.iter().min().unwrap()
 }
 
 #[cfg(test)]
