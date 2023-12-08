@@ -47,7 +47,7 @@ pub fn process_seed(seeds: Vec<i64>, maps: &Vec<Map>) -> Vec<i64> {
     let mut new_locations = vec![];
     for seed in seeds {
         let mut new_location: i64 = -1;
-        for map in maps.into_iter() {
+        for map in maps.iter() {
             if seed > map.source_range && seed < map.source_range + map.range_length {
                 new_location = seed + (map.dest_range - map.source_range)
             }
@@ -69,7 +69,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
         if line.is_empty() {
             continue;
         }
-        if line.ends_with(":") {
+        if line.ends_with(':') {
             if !almanac_step.is_empty() {
                 seeds = process_seed(seeds, &almanac_step);
             }
@@ -103,7 +103,7 @@ pub fn solve_part_2(test_mode: bool) -> usize {
             if line.is_empty() {
                 continue;
             }
-            if line.ends_with(":") {
+            if line.ends_with(':') {
                 if !almanac_step.is_empty() {
                     seeds = process_seed(seeds, &almanac_step);
                 }

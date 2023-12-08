@@ -30,7 +30,7 @@ fn parse_races(input: Vec<String>) -> Vec<[u32; 2]> {
 
     times
         .into_iter()
-        .zip(distances.into_iter())
+        .zip(distances)
         .map(|(a, b)| [a, b])
         .collect()
 }
@@ -39,14 +39,14 @@ fn parse_big_race(input: Vec<String>) -> (u64, u64) {
     let time = input[0]
         .strip_prefix("Time:")
         .unwrap()
-        .replace(" ", "")
+        .replace( ' ', "")
         .trim()
         .parse::<u64>().unwrap();
 
     let distance = input[1]
         .strip_prefix("Distance:")
         .unwrap()
-        .replace(" ", "")
+        .replace(' ', "")
         .trim()
         .parse::<u64>().unwrap();
 
@@ -70,7 +70,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
                 })
                 .count()
         })
-        .fold(1, |acc, result| acc * result)
+        .product::<usize>()
 }
 
 pub fn solve_part_2(test_mode: bool) -> usize {

@@ -70,7 +70,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
     let lines = parse_input(test_mode, 1);
     let games = parse_lines_to_games(lines);
 
-    games.iter().map(|g| calculate_points(g)).sum()
+    games.iter().map(calculate_points).sum()
 }
 
 pub fn solve_part_2(test_mode: bool) -> usize {
