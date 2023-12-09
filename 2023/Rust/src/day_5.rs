@@ -43,7 +43,7 @@ fn parse_map(line: &str) -> Map {
     }
 }
 
-pub fn process_seed(seeds: Vec<i64>, maps: &Vec<Map>) -> Vec<i64> {
+pub fn process_seed(seeds: Vec<i64>, maps: &[Map]) -> Vec<i64> {
     let mut new_locations = vec![];
     for seed in seeds {
         let mut new_location: i64 = -1;
@@ -143,7 +143,7 @@ mod tests {
             source_range: 50,
             range_length: 48,
         };
-        let result = process_seed(vec![79, 14, 55, 13], &vec![map_2, map_1]);
+        let result = process_seed(vec![79, 14, 55, 13], &[map_2, map_1]);
         assert_eq!(result, vec![81, 14, 57, 13]);
     }
 
