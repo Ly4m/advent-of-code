@@ -5,7 +5,7 @@ use std::io;
 use std::io::BufRead;
 use std::ops::Mul;
 
-fn parse_input(test_mode: bool) -> impl Iterator<Item=String> {
+fn parse_input(test_mode: bool) -> impl Iterator<Item = String> {
     let path = if test_mode {
         "inputs_test/day_7.in".to_string()
     } else {
@@ -26,7 +26,9 @@ struct Hand {
 fn parse_hand(input: &str) -> Hand {
     let (hand_part, bid_part) = input.split_once(' ').unwrap();
     let mut counts: HashMap<char, u32> = HashMap::new();
-    hand_part.chars().for_each(|c| *counts.entry(c).or_insert(0) += 1);
+    hand_part
+        .chars()
+        .for_each(|c| *counts.entry(c).or_insert(0) += 1);
     let mut card_count: Vec<u32> = counts.values().cloned().collect();
     card_count.sort();
     card_count.reverse();
@@ -59,7 +61,6 @@ fn parse_hand(input: &str) -> Hand {
     sorted_hand = sorted_hand.replace('3', "B");
     sorted_hand = sorted_hand.replace('2', "A");
 
-
     Hand {
         bid: bid_part.parse().unwrap(),
         hand: sorted_hand,
@@ -70,17 +71,22 @@ fn parse_hand(input: &str) -> Hand {
 fn parse_hand_with_jokers(input: &str) -> Hand {
     let (hand_part, bid_part) = input.split_once(' ').unwrap();
     let mut counts: HashMap<char, u32> = HashMap::new();
-    hand_part.chars().for_each(|c| *counts.entry(c).or_insert(0) += 1);
+    hand_part
+        .chars()
+        .for_each(|c| *counts.entry(c).or_insert(0) += 1);
 
     let number_of_joker = *counts.get(&'J').unwrap_or(&0);
 
     if number_of_joker > 0 && hand_part != "JJJJJ" {
         counts.remove(&'J');
-        if let Some((&max_key, _)) = counts.iter().filter(|&(&k, _)| k != 'J').max_by_key(|&(_, &v)| v) {
+        if let Some((&max_key, _)) = counts
+            .iter()
+            .filter(|&(&k, _)| k != 'J')
+            .max_by_key(|&(_, &v)| v)
+        {
             *counts.entry(max_key).or_insert(0) += number_of_joker;
         }
     }
-
 
     let mut card_count: Vec<u32> = counts.values().cloned().collect();
     card_count.sort();
@@ -126,9 +132,13 @@ fn parse_hand_with_jokers(input: &str) -> Hand {
 pub fn solve_part_1(test_mode: bool) -> usize {
     let lines = parse_input(test_mode).collect::<Vec<String>>();
     let mut k = lines.iter().map(|l| parse_hand(l)).collect::<Vec<Hand>>();
-    k.sort_by(|a, b| if b.hand_type.cmp(&a.hand_type) == Ordering::Equal {
-        b.hand.cmp(&a.hand)
-    } else { b.hand_type.cmp(&a.hand_type) });
+    k.sort_by(|a, b| {
+        if b.hand_type.cmp(&a.hand_type) == Ordering::Equal {
+            b.hand.cmp(&a.hand)
+        } else {
+            b.hand_type.cmp(&a.hand_type)
+        }
+    });
 
     k.reverse();
     let mut sum: u32 = 0;
@@ -140,11 +150,18 @@ pub fn solve_part_1(test_mode: bool) -> usize {
 
 pub fn solve_part_2(test_mode: bool) -> usize {
     let lines = parse_input(test_mode).collect::<Vec<String>>();
-    let mut k = lines.iter().map(|l| parse_hand_with_jokers(l)).collect::<Vec<Hand>>();
+    let mut k = lines
+        .iter()
+        .map(|l| parse_hand_with_jokers(l))
+        .collect::<Vec<Hand>>();
 
-    k.sort_by(|a, b| if b.hand_type.cmp(&a.hand_type) == Ordering::Equal {
-        b.hand.cmp(&a.hand)
-    } else { b.hand_type.cmp(&a.hand_type) });
+    k.sort_by(|a, b| {
+        if b.hand_type.cmp(&a.hand_type) == Ordering::Equal {
+            b.hand.cmp(&a.hand)
+        } else {
+            b.hand_type.cmp(&a.hand_type)
+        }
+    });
 
     k.reverse();
     let mut sum: u32 = 0;

@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io;
 use std::io::BufRead;
 
-fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item=String> {
+fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = String> {
     let path = if test_mode {
         format!("inputs_test/day_6_{}.in", part)
     } else {
@@ -39,16 +39,18 @@ fn parse_big_race(input: Vec<String>) -> (u64, u64) {
     let time = input[0]
         .strip_prefix("Time:")
         .unwrap()
-        .replace( ' ', "")
+        .replace(' ', "")
         .trim()
-        .parse::<u64>().unwrap();
+        .parse::<u64>()
+        .unwrap();
 
     let distance = input[1]
         .strip_prefix("Distance:")
         .unwrap()
         .replace(' ', "")
         .trim()
-        .parse::<u64>().unwrap();
+        .parse::<u64>()
+        .unwrap();
 
     (time, distance)
 }
@@ -76,8 +78,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
 pub fn solve_part_2(test_mode: bool) -> usize {
     let lines = parse_input(test_mode, 1).collect();
     let (time, distance) = parse_big_race(lines);
-    let mut sum: u64  = 0;
-
+    let mut sum: u64 = 0;
 
     for speed in 0..time {
         if speed * (time - speed) > distance {

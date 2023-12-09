@@ -86,13 +86,14 @@ pub fn solve_part_2(test_mode: bool) -> usize {
     let mut lines = parse_input(test_mode, 2);
 
     let base_seeds = parse_seeds(lines.next().unwrap().as_str());
-    let seeds_ranges = base_seeds.chunks(2).map(|sr| (sr[0], sr[1])).collect::<Vec<(i64, i64)>>();
+    let seeds_ranges = base_seeds
+        .chunks(2)
+        .map(|sr| (sr[0], sr[1]))
+        .collect::<Vec<(i64, i64)>>();
 
-    let mut mins= vec![];
+    let mut mins = vec![];
 
     for range in seeds_ranges {
-
-
         let mut lines = parse_input(test_mode, 2);
         lines.next();
 
