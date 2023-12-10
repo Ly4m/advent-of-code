@@ -3,12 +3,19 @@ use std::io;
 use std::io::BufRead;
 use std::ops::Add;
 
-fn parse_input(test_mode: bool) -> impl Iterator<Item=String> {
+fn parse_input(test_mode: bool) -> impl Iterator<Item = String> {
     const TEST_INPUT_PATH: &str = "inputs_test/";
     const INPUT_PATH: &str = "inputs/";
 
-    let path = format!("{}day_9.in", if test_mode { TEST_INPUT_PATH } else { INPUT_PATH });
-    let file = File::open(path).unwrap();
+    let path = format!(
+        "{}day_9.in",
+        if test_mode {
+            TEST_INPUT_PATH
+        } else {
+            INPUT_PATH
+        }
+    );
+    let file = File::open(path).expect("File not found");
     let reader = io::BufReader::new(file);
     reader.lines().map_while(Result::ok)
 }
@@ -30,7 +37,7 @@ pub fn predict_next_value(suite: &[isize]) -> isize {
         .add(predict_next_value(&differences))
 }
 
-fn parse_suite(line: String) -> Vec<isize>{
+fn parse_suite(line: String) -> Vec<isize> {
     line.split_whitespace()
         .map(|number| number.parse::<isize>().expect("Invalid number"))
         .collect::<Vec<isize>>()

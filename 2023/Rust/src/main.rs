@@ -1,11 +1,13 @@
 extern crate core;
 
+use std::time::Instant;
+
 use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
-use std::time::Instant;
 
 mod day_1;
+mod day_10;
 mod day_2;
 mod day_3;
 mod day_4;
@@ -59,6 +61,8 @@ fn main() {
             (8, 2) => run_bench_release(day_8::solve_part_2, false),
             (9, 1) => run_bench_release(day_9::solve_part_1, false),
             (9, 2) => run_bench_release(day_9::solve_part_2, false),
+            (10, 1) => run_bench_release(day_10::solve_part_1, false),
+            (10, 2) => run_bench_release(day_10::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 
@@ -83,5 +87,3 @@ fn run_bench_release(f: fn(bool) -> usize, test_mode: bool) {
     println!("|Elapsed time: {:?}", duration);
     println!("|----------------------------------------");
 }
-
-
