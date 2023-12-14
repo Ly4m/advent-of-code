@@ -16,6 +16,7 @@ impl<'a> App<'a> {
                 " Day 8: Haunted Wasteland 👻",
                 " Day 9: Mirage Maintenance 🏝",
                 " Day 10: Pipe Maze 🪈",
+                " Day 11: Cosmic Expansion 🪐",
             ],
         }
     }
