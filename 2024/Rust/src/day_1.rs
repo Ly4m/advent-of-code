@@ -1,9 +1,9 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
-use num::abs;
 
-fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = String> {
+fn parse_input<T: std::str::FromStr>(test_mode: bool, part: i8) -> Vec<(T, T)> {
     let path = if test_mode {
         format!("inputs_test/day_1_{}.in", part)
     } else {
@@ -12,48 +12,48 @@ fn parse_input(test_mode: bool, part: i8) -> impl Iterator<Item = String> {
     let file = File::open(path).unwrap();
     let reader = io::BufReader::new(file);
 
-    reader.lines().map_while(Result::ok)
+    reader.lines()
+        .map_while(Result::ok)
+        .filter_map(|line| {
+            let mut locations = line.split_whitespace();
+            match(locations.next()?.parse::<T>(), locations.next()?.parse::<T>()) {
+                (Ok(loc1), Ok(loc2)) => Some((loc1, loc2)),
+                _ => None,
+            }
+        })
+        .collect::<Vec<(T, T)>>()
 }
 
 pub fn solve_part_1(test_mode: bool) -> usize {
-    let lines = parse_input(test_mode, 1);
+    let lines: Vec<(isize, isize)> = parse_input::<isize>(test_mode, 1);
 
-    let mut list_a: Vec<isize> = vec![];
-    let mut list_b: Vec<isize> = vec![];
-    let mut sum: usize = 0;
+    let (mut list_a, mut list_b): (Vec<_>, Vec<_>) =  lines.into_iter().unzip();
 
-    for line in lines {
-        let parts: Vec<&str> = line.split_whitespace().collect();
 
-        if let (Ok(num1), Ok(num2)) = (parts[0].parse::<isize>(), parts[1].parse::<isize>()) {
-            list_a.push(num1);
-            list_b.push(num2);
-        }
-    }
+    list_a.sort_unstable();
+    list_b.sort_unstable();
 
-    list_a.sort();
-    list_b.sort();
-
-    let it  = list_a.iter().zip(list_b.iter());
-
-    for (i, (x, y)) in it.enumerate() {
-        sum += abs(x - y) as usize;
-    }
-
-    sum
+    list_a.into_iter()
+        .zip(list_b)
+        .map(|(a, b)| (a - b).unsigned_abs())
+        .sum()
 }
 
 pub fn solve_part_2(test_mode: bool) -> usize {
-    // let lines = parse_input(test_mode, 2);
-    // let mut sum = 0;
-    //
-    // for line in lines {
-    //     let interpolated_line = interpolate_numbers(line);
-    //     sum += find_first_and_last_digit_sum(interpolated_line);
-    // }
-    //
-    // sum
-    0
+    let lines = parse_input::<usize>(test_mode, 1);
+
+    let list_a: Vec<usize> = lines.iter().map(|&(a, _)| a).collect();
+    let list_b: Vec<usize> = lines.iter().map(|&(_, b)| b).collect();
+
+    let mut counts = HashMap::new();
+    for &number in &list_b {
+        *counts.entry(number).or_insert(0) += 1;
+    }
+
+    list_a
+        .iter()
+        .map(|&number| number * counts.get(&number).copied().unwrap_or(0))
+        .sum()
 }
 
 #[cfg(test)]
@@ -66,9 +66,9 @@ mod tests {
         assert_eq!(result, 11);
     }
 
-    // #[test]
-    // fn part_2() {
-    //     let result = solve_part_2(true);
-    //     assert_eq!(result, 281);
-    // }
+    #[test]
+    fn part_2() {
+        let result = solve_part_2(true);
+        assert_eq!(result, 31);
+    }
 }
