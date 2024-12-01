@@ -7,6 +7,7 @@ use dialoguer::{Confirm, Select, theme::ColorfulTheme};
 use crate::state::App;
 
 mod day_1;
+mod day_2;
 
 mod state;
 
@@ -38,6 +39,8 @@ fn main() {
         match (day, part) {
             (1, 1) => run_bench_release(day_1::solve_part_1, false),
             (1, 2) => run_bench_release(day_1::solve_part_2, false),
+            (2, 1) => run_bench_release(day_2::solve_part_1, false),
+            (2, 2) => run_bench_release(day_2::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::fs::File;
-use std::io;
 use std::io::BufRead;
+use std::io;
 
 fn parse_input<T: std::str::FromStr>(test_mode: bool, part: i8) -> Vec<(T, T)> {
     let path = if test_mode {
@@ -11,6 +11,7 @@ fn parse_input<T: std::str::FromStr>(test_mode: bool, part: i8) -> Vec<(T, T)> {
     };
     let file = File::open(path).unwrap();
     let reader = io::BufReader::new(file);
+    
 
     reader.lines()
         .map_while(Result::ok)
@@ -25,10 +26,9 @@ fn parse_input<T: std::str::FromStr>(test_mode: bool, part: i8) -> Vec<(T, T)> {
 }
 
 pub fn solve_part_1(test_mode: bool) -> usize {
-    let lines: Vec<(isize, isize)> = parse_input::<isize>(test_mode, 1);
+    let lines = parse_input::<isize>(test_mode, 1);
 
     let (mut list_a, mut list_b): (Vec<_>, Vec<_>) =  lines.into_iter().unzip();
-
 
     list_a.sort_unstable();
     list_b.sort_unstable();
@@ -42,8 +42,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
 pub fn solve_part_2(test_mode: bool) -> usize {
     let lines = parse_input::<usize>(test_mode, 1);
 
-    let list_a: Vec<usize> = lines.iter().map(|&(a, _)| a).collect();
-    let list_b: Vec<usize> = lines.iter().map(|&(_, b)| b).collect();
+    let (list_a, list_b): (Vec<_>, Vec<_>) =  lines.into_iter().unzip();
 
     let mut counts = HashMap::new();
     for &number in &list_b {
@@ -59,13 +58,11 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 #[cfg(test)]
 mod tests {
     use crate::day_1::{solve_part_1, solve_part_2};
-
     #[test]
     fn part_1() {
         let result = solve_part_1(true);
         assert_eq!(result, 11);
     }
-
     #[test]
     fn part_2() {
         let result = solve_part_2(true);
