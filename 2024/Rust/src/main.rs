@@ -2,7 +2,7 @@ extern crate core;
 
 use std::time::Instant;
 
-use dialoguer::{Confirm, Select, theme::ColorfulTheme};
+use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
 
