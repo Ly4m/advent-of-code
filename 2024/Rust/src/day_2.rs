@@ -54,15 +54,19 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 
 fn check_is_safe(report: &[i32]) -> bool {
     let is_increasing = report[0] < report[1];
-    
+
     for window in report.windows(2) {
         let diff = window[0] - window[1];
 
-        if !(1..=3).contains(&diff.abs()) { return false; }
+        if !(1..=3).contains(&diff.abs()) {
+            return false;
+        }
 
-        if is_increasing && diff.is_positive() || !is_increasing && diff.is_negative() { return false; }
+        if is_increasing && diff.is_positive() || !is_increasing && diff.is_negative() {
+            return false;
+        }
     }
-    
+
     true
 }
 

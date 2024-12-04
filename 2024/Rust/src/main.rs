@@ -2,14 +2,14 @@ extern crate core;
 
 use std::time::Instant;
 
-use dialoguer::{Confirm, Select, theme::ColorfulTheme};
+use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
 
 mod day_1;
 mod day_2;
 mod day_3;
-
+mod day_4;
 mod state;
 
 fn main() {
@@ -43,6 +43,8 @@ fn main() {
             (2, 2) => run_bench_release(day_2::solve_part_2, false),
             (3, 1) => run_bench_release(day_3::solve_part_1, false),
             (3, 2) => run_bench_release(day_3::solve_part_2, false),
+            (4, 1) => run_bench_release(day_4::solve_part_1, false),
+            (4, 2) => run_bench_release(day_4::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 

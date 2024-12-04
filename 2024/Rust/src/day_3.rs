@@ -15,13 +15,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
     let data = parse_input(test_mode, 1);
     let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
     re.captures_iter(&data)
-        .map(|x| {
-            (
-                x[1].parse::<usize>().unwrap(),
-                x[2].parse::<usize>().unwrap(),
-            )
-        })
-        .map(|(x, y)| x * y)
+        .map(|x| x[1].parse::<usize>().unwrap() * x[2].parse::<usize>().unwrap())
         .sum()
 }
 
@@ -41,9 +35,9 @@ pub fn solve_part_2(test_mode: bool) -> usize {
                         toggle = true;
                         None
                     }
-                    other if other.starts_with("mul") && toggle => 
-                        Some(x[1].parse::<usize>().unwrap() * x[2].parse::<usize>().unwrap()
-                    ),
+                    other if other.starts_with("mul") && toggle => {
+                        Some(x[1].parse::<usize>().unwrap() * x[2].parse::<usize>().unwrap())
+                    }
                     &_ => None,
                 }
             } else {
