@@ -111,8 +111,6 @@ pub fn solve_part_2(test_mode: bool) -> usize {
     let (page_ordering_rules, updates) = parse_input(test_mode, 1);
     let rules_map = create_rules_as_map(&page_ordering_rules);
     
-    let mut total_middle_sum = 0;
-    
     let mut incorrect_updates: Vec<Vec<i32>> = updates
         .into_iter()
         .filter(|update| !is_correct_order(update, &rules_map))
