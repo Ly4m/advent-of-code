@@ -137,7 +137,7 @@ pub fn solve_part_1(test_mode: bool) -> usize {
 }
 
 pub fn solve_part_2(test_mode: bool) -> usize {
-    
+
     let grid = parse_input(test_mode, 1);
     let mut position = find_starting_position(&grid);
     let starting = find_starting_position(&grid);
@@ -145,7 +145,6 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 
     let mut visited_positions: HashSet<(isize, isize, char)> = HashSet::new();
     let mut infinite_loop_positions: HashSet<(isize, isize)> = HashSet::new();
-    let mut infinite_loop_counter = 0;
 
     while guard_is_in_grid(&grid, &position) {
         let mut new_position = (
@@ -170,19 +169,17 @@ pub fn solve_part_2(test_mode: bool) -> usize {
         if !(guard_is_leaving(&grid, new_position) || new_position.0 == starting.0 && new_position.1 == starting.1)
         {
             println!("{:?}", new_position);
-            
+
             let mut clone = grid.clone();
             clone[new_position.0 as usize][new_position.1 as usize] = '#';
             if is_grid_infinite(&clone) {
                 infinite_loop_positions.insert((new_position.0, new_position.1));
-                infinite_loop_counter += 1
             }
         }
-    
+
         position = new_position;
         visited_positions.insert(position);
     }
-    println!("{:?}", infinite_loop_positions);
     infinite_loop_positions.len()
 }
 
