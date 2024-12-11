@@ -168,8 +168,6 @@ pub fn solve_part_2(test_mode: bool) -> usize {
 
         if !(guard_is_leaving(&grid, new_position) || new_position.0 == starting.0 && new_position.1 == starting.1)
         {
-            println!("{:?}", new_position);
-
             let mut clone = grid.clone();
             clone[new_position.0 as usize][new_position.1 as usize] = '#';
             if is_grid_infinite(&clone) {

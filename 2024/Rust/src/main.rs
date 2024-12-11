@@ -15,6 +15,7 @@ mod day_5;
 mod day_6;
 mod day_7;
 mod day_8;
+mod day_9;
 
 fn main() {
     let app = App::new();
@@ -57,6 +58,8 @@ fn main() {
             (7, 2) => run_bench_release(day_7::solve_part_2, false),
             (8, 1) => run_bench_release(day_8::solve_part_1, false),
             (8, 2) => run_bench_release(day_8::solve_part_2, false),
+            (9, 1) => run_bench_release(day_9::solve_part_1, false),
+            (9, 2) => run_bench_release(day_9::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 
