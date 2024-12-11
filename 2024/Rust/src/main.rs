@@ -6,8 +6,8 @@ use dialoguer::{theme::ColorfulTheme, Confirm, Select};
 
 use crate::state::App;
 
-mod state;
 mod day_1;
+mod day_10;
 mod day_2;
 mod day_3;
 mod day_4;
@@ -16,6 +16,7 @@ mod day_6;
 mod day_7;
 mod day_8;
 mod day_9;
+mod state;
 
 fn main() {
     let app = App::new();
@@ -60,6 +61,8 @@ fn main() {
             (8, 2) => run_bench_release(day_8::solve_part_2, false),
             (9, 1) => run_bench_release(day_9::solve_part_1, false),
             (9, 2) => run_bench_release(day_9::solve_part_2, false),
+            (10, 1) => run_bench_release(day_10::solve_part_1, false),
+            (10, 2) => run_bench_release(day_10::solve_part_2, false),
             _ => println!("Not yet Implemented"),
         }
 

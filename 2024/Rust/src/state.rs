@@ -15,7 +15,7 @@ impl<'a> App<'a> {
                 " Day 7: Bridge Repair 🌉",
                 " Day 8: Resonant Collinearity 📡",
                 " Day 9: Disk Fragmenter 💽",
-                " Day 10: ",
+                " Day 10: Hoof It ⛰️",
                 " Day 11: ",
                 " Day 12: ",
                 " Day 13: ",
