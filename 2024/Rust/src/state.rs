@@ -17,7 +17,7 @@ impl<'a> App<'a> {
                 " Day 9: Disk Fragmenter 💽",
                 " Day 10: Hoof It ⛰️",
                 " Day 11: Plutonian Pebbles 🪨",
-                " Day 12: ",
+                " Day 12: Garden Groups 👨‍🌾",
                 " Day 13: ",
                 " Day 14: ",
                 " Day 15: ",
