@@ -19,7 +19,7 @@ impl<'a> App<'a> {
                 " Day 11: Plutonian Pebbles 🪨",
                 " Day 12: Garden Groups 👨‍🌾",
                 " Day 13: Claw Contraption 🕹️",
-                " Day 14: ",
+                " Day 14: Restroom Redoubt 🚽",
                 " Day 15: ",
                 " Day 16: ",
                 " Day 17: ",
