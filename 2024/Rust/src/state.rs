@@ -20,7 +20,7 @@ impl<'a> App<'a> {
                 " Day 12: Garden Groups 👨‍🌾",
                 " Day 13: Claw Contraption 🕹️",
                 " Day 14: Restroom Redoubt 🚽",
-                " Day 15: ",
+                " Day 15: Warehouse Woes 📦",
                 " Day 16: ",
                 " Day 17: ",
                 " Day 18: ",
